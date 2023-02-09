@@ -12,7 +12,17 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()],
+      imports: [
+        'vue',
+        {
+          '@vueuse/core': []
+        }
+      ],
+      dts: 'src/auto-import.d.ts',
+      eslintrc: {
+        enabled: true
+      }
     }),
     Components({
       resolvers: [ElementPlusResolver()]
