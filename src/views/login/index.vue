@@ -1,15 +1,11 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="login-container">
     <div class="login-body">
       <div class="login-slogan"></div>
       <div class="login-content">
         <h1 class="login-title">福田e家后台管理系统</h1>
-        <el-form
-          class="login-form"
-          ref="loginForm"
-          :model="loginForm"
-          :rules="loginRules"
-        >
+        <el-form class="login-form" ref="loginForm" :model="loginForm">
           <el-form-item class="login-form-item" prop="loginname">
             <el-input
               ref="loginname"
@@ -33,150 +29,49 @@
               placeholder="请输入登录密码"
               name="password"
               class="login-input"
-              @keyup.enter.native="handleLogin"
             >
               <solt>
                 <i class="el-input__icon el-icon-lock"></i>
               </solt>
             </el-input>
-            <span class="show-pwd" @click="showPwd">
-              <svg-icon
-                :name="passwordType === 'password' ? 'eye-off' : 'eye-on'"
-              />
+            <span class="show-pwd">
+              <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
             </span>
           </el-form-item>
           <el-form-item class="login-form-item login-form-checkbox">
-            <el-checkbox v-model="isChecked" class="login-checkbox"
-              >记录登录密码</el-checkbox
-            >
+            <el-checkbox v-model="isChecked" class="login-checkbox">记录登录密码</el-checkbox>
           </el-form-item>
           <!-- :disabled="loginForm.loginname === '' || loginForm.password === ''" -->
-          <el-button
-            ref="loginButton"
-            type="primary"
-            class="login-button"
-            :loading="loading"
-            :disabled="loginBtnHD"
-            @click.native.prevent="handleLogin"
-            >登录</el-button
-          >
+          <el-button ref="loginButton" type="primary" class="login-button">登录</el-button>
         </el-form>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-// import { Component, Vue, Watch } from "vue-property-decorator";
-// import { Route } from "vue-router";
-// import { Dictionary } from "vue-router/types/router";
-// import { Form as ElForm, Input, Button } from "element-ui";
-// import { UserModule } from "@/store/modules/user";
+<script setup lang="ts">
+// defineOptions({
+//   name: "Login"
 
-declare function require(string: any): string;
+import { ref } from 'vue'
 
-@Component({
-  name: "Login",
-})
-export default class extends Vue {
-  public isChecked = true;
-  public loginForm = {
-    loginname: "",
-    password: "",
-  };
-  public validateUsername = (rule: any, value: string, callback: Function) => {
-    if (value.length === 0) {
-      callback(new Error("请输入登录账号"));
-    } else {
-      callback();
-    }
-  };
-  public validatePassword = (rule: any, value: string, callback: Function) => {
-    if (value.length === 0) {
-      callback(new Error("请输入登录密码"));
-    } else {
-      callback();
-    }
-  };
-  public loginRules = {
-    loginname: [{ validator: this.validateUsername, trigger: "blur" }],
-    password: [{ validator: this.validatePassword, trigger: "blur" }],
-  };
-  public passwordType = "password";
-  public loading = false;
-  public redirect?: string;
-  public otherQuery: Dictionary<string> = {};
-
-  loginBtnHD = false;
-  @Watch("loginForm", { deep: true })
-  loginBtnChange() {
-    this.loginBtnHD = !this.loginForm.loginname || !this.loginForm.password;
-  }
-
-  @Watch("$route", { immediate: true })
-  public onRouteChange(route: Route) {
-    // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
-    // See https://github.com/vuejs/vue-router/pull/2050 for details
-    const query = route.query as Dictionary<string>;
-    if (query) {
-      this.redirect = query.redirect || "";
-      this.otherQuery = this.getOtherQuery(query);
-    }
-  }
-
-  // 展示密码
-  public showPwd() {
-    if (this.passwordType === "password") {
-      this.passwordType = "";
-    } else {
-      this.passwordType = "password";
-    }
-    this.$nextTick(() => {
-      (this.$refs.password as Input).focus();
-    });
-  }
-  // 登录处理
-  public handleLogin() {
-    (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
-      if (valid) {
-        this.loading = true;
-        // try {
-        //   await UserModule.Login(this.loginForm);
-        //   this.loading = false;
-        // } catch {
-        //   this.loading = false;
-        // }
-        this.$router.push({
-          path: this.redirect || "/",
-          query: this.otherQuery,
-        });
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.loading = false;
-        }, 50 * 1000);
-      } else {
-        return false;
-      }
-    });
-  }
-
-  // 获取链接参数字符串
-  public getOtherQuery(query: Dictionary<string>) {
-    return Object.keys(query).reduce((acc, cur) => {
-      if (cur !== "redirect") {
-        acc[cur] = query[cur];
-      }
-      return acc;
-    }, {} as Dictionary<string>);
-  }
+// });
+const loading = false
+const isChecked = true
+const password = ref('')
+// const = false
+const passwordType = 'password'
+const loginForm = {
+  loginname: '',
+  password: ''
 }
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .login-container {
   position: relative;
   height: 100vh;
-  background: url("https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161415063")
-    no-repeat center bottom;
+  background: url('https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161415063') no-repeat
+    center bottom;
   background-size: cover;
   min-width: 1080px;
   min-height: 680px;
@@ -199,7 +94,7 @@ export default class extends Vue {
     box-sizing: border-box;
     width: 1000px;
     height: 580px;
-    background-color: $colorWhite;
+    // background-color: $colorWhite;
     transform: translate3d(-50%, -50%, 0);
   }
   .login-slogan {
@@ -207,7 +102,7 @@ export default class extends Vue {
     display: block;
     width: 520px;
     height: 580px;
-    background: url("https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161648918")
+    background: url('https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161648918')
       no-repeat center;
     background-size: cover;
   }
@@ -220,21 +115,21 @@ export default class extends Vue {
   .login-title {
     color: #06192d;
     font-size: 24px;
-    font-weight: $fontWeightBold;
+    // font-weight: $fontWeightBold;
     line-height: 32px;
     text-align: center;
     margin-bottom: 26px;
   }
   .login-input {
     color: #06192d;
-    font-size: $fontSizeNormal;
-    font-weight: $fontWeightNormal;
+    // font-size: $fontSizeNormal;
+    // font-weight: $fontWeightNormal;
   }
   .login-button {
     display: block;
     width: 100%;
     font-size: 18px;
-    font-weight: $fontWeightNormal;
+    // font-weight: $fontWeightNormal;
     margin-top: 80px;
     padding: 12px 20px;
   }
@@ -272,17 +167,17 @@ export default class extends Vue {
     user-select: none;
     margin-top: -20px;
   }
-  ::v-deep {
+  deep {
     .el-form-item__content {
-      font-size: $fontSizeNormal;
-      font-weight: $fontWeightNormal;
+      // font-size: $fontSizeNormal;
+      // font-weight: $fontWeightNormal;
     }
     .login-input .el-input__inner {
       background-color: #f6f9ff !important;
       border: 1px solid #f6f9ff;
       color: #06192d;
-      font-size: $fontSizeNormal;
-      font-weight: $fontWeightNormal;
+      // font-size: $fontSizeNormal;
+      // font-weight: $fontWeightNormal;
     }
     .el-input__prefix,
     .el-input__suffix {
@@ -296,8 +191,8 @@ export default class extends Vue {
     textarea:-webkit-autofill,
     select:-webkit-autofill {
       box-shadow: 0 0 0 999px #f6f9ff inset;
-      font-size: $fontSizeNormal;
-      font-weight: $fontWeightNormal;
+      // font-size: $fontSizeNormal;
+      // font-weight: $fontWeightNormal;
     }
     input::-webkit-input-placeholder {
       color: #72849a;
@@ -315,7 +210,7 @@ export default class extends Vue {
     .login-slogan {
       width: 440px;
       height: 490px;
-      background: url("https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161681862")
+      background: url('https://obs-fix-video.obs.cn-north-1.myhwclouds.com/img_1652161681862')
         no-repeat center;
       background-size: cover;
     }
