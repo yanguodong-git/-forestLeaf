@@ -9,7 +9,10 @@ export default {
 </script>
 <script setup lang="ts">
 const phone = ref('')
-const password = ref('')
+const bbb = ref('')
+onMounted(()=>{
+  
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
