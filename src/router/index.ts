@@ -2,11 +2,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 // 示例使用
-export const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/login'
-  },
+export const demoRoutes: Array<RouteRecordRaw> = [
+  // {
+  //   path: '/',
+  //   redirect: '/login'
+  // },
   {
     path: '/login',
     name: 'login',
@@ -33,16 +33,16 @@ export const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-// const routes: Array<RouteRecordRaw> = [
-//   {
-//     path: '/',
-//     component: () => import('@/layout/index.vue'),
-//     redirect: '/index',
-//     children: demoRoutes
-//   },
-//   // 替代vue2中的'*'通配符路径
-//   { path: '/:pathMatch(.*)*', redirect: '/' }
-// ]
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    redirect: '/index',
+    children: demoRoutes
+  },
+  // 替代vue2中的'*'通配符路径
+  { path: '/:pathMatch(.*)*', redirect: '/' }
+]
 
 const router = createRouter({
   history: createWebHashHistory(), // history 模式则使用 createWebHistory()
