@@ -3,10 +3,23 @@ import type { RouteRecordRaw } from 'vue-router'
 
 // 示例使用
 export const demoRoutes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/',
-  //   redirect: '/login'
-  // },
+  {
+    path: '/channel',
+    name: 'channel',
+    meta: {
+      title: '渠道管理'
+    },
+    component: () => import('@/views/channel/index.vue')
+  }
+]
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    redirect: '/channel',
+    children: demoRoutes
+  },
   {
     path: '/login',
     name: 'login',
@@ -16,32 +29,15 @@ export const demoRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/views/login/index.vue')
   },
   {
-    path: '/channel',
-    name: 'channel',
-    meta: {
-      title: 'channel'
-    },
-    component: () => import('@/views/channel/index.vue')
-  },
-  {
     path: '/404',
     name: '404',
     meta: {
       title: '404'
     },
     component: () => import('@/views/404.vue')
-  }
-]
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    redirect: '/index',
-    children: demoRoutes
   },
   // 替代vue2中的'*'通配符路径
-  { path: '/:pathMatch(.*)*', redirect: '/' }
+  { path: '/:pathMatch(.*)*', redirect: '/404' }
 ]
 
 const router = createRouter({

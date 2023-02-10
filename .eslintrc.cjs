@@ -8,7 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier',
-    './.eslintrc-auto-import.json'
+    './.eslintrc-auto-import.json' //解决eslint报错问题
   ],
   parserOptions: {
     ecmaVersion: 'latest'
