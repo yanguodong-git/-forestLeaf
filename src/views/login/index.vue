@@ -1,11 +1,10 @@
 <template>
   <div class="box">
-    <transition-group class="login-bg" name="flip-list" tag="ul">
+    <transition-group name="list" tag="ul">
       <li v-for="bg in loginBgs" :key="bg" class="list-item">
         <img :src="bg" />
       </li>
     </transition-group>
-    <div class="login-cover" />
     <div class="inp"></div>
   </div>
 </template>
@@ -44,7 +43,7 @@ const startChange = () => {
       index.value = 0
     }
     loginBgs.value.splice(0, 1, loginBg.value[index.value])
-  }, 10000)
+  }, 20000)
 }
 </script>
 
@@ -52,43 +51,34 @@ const startChange = () => {
 .box {
   width: 100vw;
   height: 100vh;
-  min-width: 600px;
-  min-height: 680px;
-  // background: url(@/assets/image/loginback.png) repeat center;
-  background-size: 100%;
+  transform: scale(1);
+  transition: all 0.2s;
   position: fixed;
-  overflow: hidden;
-  // opacity: 0.5;
-  .flip-list-enter-active,
-  .flip-list-leave-active {
-    transition: all 3s;
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 2s ease;
   }
-  .flip-list-enter,
-  .flip-list-leave-active {
+  .list-enter-from,
+  .list-leave-to {
     opacity: 0;
+    // transform: translateY(30px);
   }
-  .login-bg li {
-    position: absolute;
-    top: 0;
-    left: 0;
+  ul {
     width: 100%;
     height: 100%;
-    height: 100vh;
-    // min-height: 720px;
-  }
-  .login-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .login-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    width: 100%;
-    height: 680px;
-    background-color: rgba(0, 0, 0, 0.001);
+
+    li {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
   .inp {
     width: 25vw;
@@ -101,5 +91,8 @@ const startChange = () => {
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 15px black;
   }
+}
+.box:hover {
+  transform: scale(1.1);
 }
 </style>
