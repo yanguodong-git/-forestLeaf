@@ -5,7 +5,19 @@
         <img :src="bg" />
       </li>
     </transition-group>
-    <div class="inp"></div>
+    <div class="inp">
+      <div class="inp_user">
+        <el-input v-model="userName" placeholder="user" />
+        <form>
+          <el-input v-model="passWord" show-password type="password" placeholder="password" />
+        </form>
+        <yanzhengma />
+      </div>
+      <div class="btn">
+        <el-button type="primary" @click="singIn">登录</el-button>
+        <el-button type="">找回密码</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,6 +27,8 @@ export default {
 }
 </script> -->
 <script setup lang="ts">
+import router from '@/router'
+import yanzhengma from './components/yanzhengma.vue'
 const loginBgs = ref([] as Array<string>)
 // const loginBgs = ref<string[]>([]);
 
@@ -26,15 +40,28 @@ const loginBg = ref([
   'https://obs-fix-video.obs.cn-north-1.myhwclouds.com/f2694a6f84a54440a204c4043f7f1d34.jpg',
   'https://obs-fix-video.obs.cn-north-1.myhwclouds.com/936af5a525aa4347821b237ffe53a49c.jpg'
 ] as Array<string>)
-const phone = ref('' as string)
-const bbb = ref('' as string)
+const userName = ref('' as string)
+const passWord = ref('' as string)
 const index = ref(0)
 
 onMounted(() => {
   loginBgs.value = [loginBg.value[0]]
   startChange()
-  console.log(useRoute().query)
+  console.log(useRoute())
 })
+const singIn = () => {
+  if (userName.value === '') {
+    ElMessage.error('用户名不能为空')
+  } else if (passWord.value === '') {
+    ElMessage.error('密码不能为空')
+  } else {
+    ElMessage.success('登录成功')
+    router.push({
+      path: '/channel',
+      query: {}
+    })
+  }
+}
 const startChange = () => {
   setInterval(() => {
     if (index.value < loginBg.value.length - 1) {
@@ -43,7 +70,7 @@ const startChange = () => {
       index.value = 0
     }
     loginBgs.value.splice(0, 1, loginBg.value[index.value])
-  }, 20000)
+  }, 10000)
 }
 </script>
 
@@ -51,8 +78,6 @@ const startChange = () => {
 .box {
   width: 100vw;
   height: 100vh;
-  transform: scale(1);
-  transition: all 0.2s;
   position: fixed;
   .list-enter-active,
   .list-leave-active {
@@ -61,12 +86,10 @@ const startChange = () => {
   .list-enter-from,
   .list-leave-to {
     opacity: 0;
-    // transform: translateY(30px);
   }
   ul {
     width: 100%;
     height: 100%;
-
     li {
       width: 100%;
       height: 100%;
@@ -82,17 +105,29 @@ const startChange = () => {
   }
   .inp {
     width: 25vw;
-    height: 30vw;
-    background: #ffffff;
-    opacity: 0.3;
+    height: 23vw;
+    padding: 30px;
+    background-color: rgba(251, 248, 248, 0.46);
     position: absolute;
     top: 50%;
     left: 80%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 15px black;
+    .inp_user {
+      margin: 30px 0;
+      .el-input {
+        margin-bottom: 30px;
+        height: 40px;
+      }
+    }
+    .btn {
+      .el-button {
+        width: 120px;
+        height: 39px;
+      }
+      position: fixed;
+      bottom: 40px;
+    }
   }
-}
-.box:hover {
-  transform: scale(1.1);
 }
 </style>
